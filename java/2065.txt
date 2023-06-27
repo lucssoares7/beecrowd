@@ -1,0 +1,42 @@
+import java.io.IOException;
+import java.util.Scanner;
+/**
+ * IMPORTANT: 
+ *      O nome da classe deve ser "Main" para que a sua solução execute
+ *      Class name must be "Main" for your solution to execute
+ *      El nombre de la clase debe ser "Main" para que su solución ejecutar
+ */
+public class Main {
+ 
+    public static void main(String[] args) throws IOException {
+        Scanner leitura = new Scanner(System.in);     
+        int n_caixas = leitura.nextInt();
+        int m_clientes = leitura.nextInt();
+        int[] v_tempo_especifico = new int[n_caixas];
+        int[] c_itens_cesta = new int[m_clientes];
+        int[] tempo_em_cada_caixa = new int[n_caixas];
+        long tempo_total_atendimento = 0; 
+        
+        for (int i = 0; i < n_caixas; i++) {
+            v_tempo_especifico[i] = leitura.nextInt();
+        }
+        
+        for (int i = 0; i < m_clientes; i++) {
+            c_itens_cesta[i] = leitura.nextInt();
+        }
+        
+        for (int i = 0; i < m_clientes; i++) {
+            int numero_livre_caixas = 0;
+            for (int k = 1; k < n_caixas; k++) {
+                if (tempo_em_cada_caixa[k] < tempo_em_cada_caixa[numero_livre_caixas]) {
+                    numero_livre_caixas = k;
+                }
+            }
+            tempo_em_cada_caixa[numero_livre_caixas] += v_tempo_especifico[numero_livre_caixas] * c_itens_cesta[i];
+            if (tempo_em_cada_caixa[numero_livre_caixas] > tempo_total_atendimento) {
+                tempo_total_atendimento = tempo_em_cada_caixa[numero_livre_caixas];
+            }
+        }
+        System.out.println(tempo_total_atendimento);
+    }
+}
